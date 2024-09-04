@@ -72,7 +72,7 @@ The above optimization can be solved by an iterative gradient method, with updat
 <p align="middle">
   <img src="static/image/updaterule.png" width="900" />
 </p>
-where $\eta$ is the learning rate. Here we straight-through the second order information following the routine from  
+where η is the learning rate. Here we straight-through the second order information following the routine from  
 MAML. 
 
 We present the detailed algorithm in Algorithm 1. The overall procedure requires three forward/backward passes
