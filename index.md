@@ -92,7 +92,7 @@ for each optimization step.
 
 **Robustness to model architectures.** In the next table, we show that the proposed method can be extended to two latest SOTA model architectures, i.e., Gemma2-9B, and Qwen2-7B. In average, Booster achieves 34.14\% reduction of harmful score and 0.71\% improvement of finetune accuracy.
 <p align="middle">
-  <img src="static/image/quantitive2.png" width="900" />
+  <img src="static/image/quantitive2.png" width="700" />
 </p>
 
 ## Qualitative results
