@@ -34,15 +34,21 @@ Harmful fine-tuning issue \citep{qi2023fine} poses serious safety concerns for L
   <img src="static/image/booster.png" width="700" />
 </p>
 
-The figure demonstrates the risk for fine-tuning-as-a-service business model. At the first stage of the service pipeline, the model is safety aligned with safety alignment data/**simulated harmful data**. At the second stage, users upload data for service provider to finetune, and the service provider finetune model on user data to deliver custoomized service. However, the user data may contain harmful demonstration data that may subverts the previous enforced alignment. Finetuning on this partially harmful data and deploy the alignment-broken fine-tuned model may cause serious ethical and governance concern.    
+The figure demonstrates the risk for fine-tuning-as-a-service business model. 
+* At the first stage of the service pipeline, the model is safety aligned with safety alignment data/**simulated harmful data**. 
+
+* At the second stage (*where the attack surface is*), users upload data for service provider to finetune, and the service provider finetune model on user data to deliver custoomized service. However, the user data may contain harmful demonstration data that may subverts the previous enforced alignment. Finetuning on this partially harmful data and deploy the alignment-broken fine-tuned model may cause serious ethical and governance concern.    
 
 
 ## Harmful Perturbation
 We in the following show that the **harmful perturbation** should be the root cause of harmful fine-tuning attack. 
 
-**Definition of harmful perturbation.** Harmful perturbation is defined as **taking one step on the model towards the gradient direction over the harmful data**.
+**Definition of harmful perturbation.** Harmful perturbation is defined as *taking one step on the model towards the gradient direction over the harmful data*.
 
-**Impact of harmful perturbation.** The below Figure shows that the model's harmful score will substantially increase along with optimization steps invested in fine-tuning on a pure harmful dataset. On the contrary, the harmful score will not be affected much via fine-tuning on a pure SST2 dataset.  This indicates that taking a step with the gradient of the harmful data (i.e.,harmful perturbation) is indeed the reason for the alignment broken. the The middle/right of below Figure how taking harmful perturbation and SST2 perturbation in each epoch will affect the harmful training/testing loss. As shown harmful perturbation significantly reduces the harmful training/testing loss, which means the model starts to fit the harmful data, and therefore explaining the rise of harmful score when taking harmful perturbation.
+**Impact of harmful perturbation.** 
+* The left of the below figure shows that the model's harmful score will substantially increase along with optimization steps invested in fine-tuning on a pure harmful dataset. On the contrary, the harmful score will not be affected much via fine-tuning on a pure SST2 dataset.  This indicates that taking a step with the gradient of the harmful data (i.e.,harmful perturbation) is indeed the reason for the alignment broken.
+
+* The middle/right of the below figure how taking harmful perturbation and SST2 perturbation in each epoch will affect the harmful training/testing loss. As shown, harmful perturbation significantly reduces the harmful training/testing loss, which means the model starts to fit the harmful data, and therefore explaining the rise of harmful score when taking harmful perturbation.
 
 <p align="middle">
   <img src="static/image/statistics.png" width="900" />
@@ -56,7 +62,9 @@ In order to attenuate the negative impact of harmful perturbation, Booster aims 
   <img src="static/image/booster problem.png" width="700" />
 </p>
 where f(w) is the empirical loss over the alignment dataset and h(w) is the empirical loss over the
-harmful dataset, λ is the regularizer’s intensity, and α is the step size. Our contribution lies in the second term, which measures the gap between the original harmful loss and the harmful loss after taking a normalized step with the harmful gradient. The idea is to minimize the impact of potential harmful perturbation towards the alignment model  while simultaneously minimizing its alignment loss. Specifically, the second term simulates the decrease of harmful loss after one step of fine-tuning on harmful samples. By minimizing this gap, the decrease of harmful loss after taking optimization on the real harmful samples in the fine-tuning stage will be minimized (i.e., impact of harmful perturbation will be attenuated).   
+harmful dataset, λ is the regularizer’s intensity, and α is the step size. 
+
+Our contribution lies in the second term, which measures the gap between the original harmful loss and the harmful loss after taking a normalized step with the harmful gradient. The idea is to minimize the impact of potential harmful perturbation towards the alignment model  while simultaneously minimizing its alignment loss. Specifically, the second term simulates the decrease of harmful loss after one step of fine-tuning on harmful samples. By minimizing this gap, the decrease of harmful loss after taking optimization on the real harmful samples in the fine-tuning stage will be minimized (i.e., impact of harmful perturbation will be attenuated).   
 
 
 The above optimization can be solved by an iterative gradient method, with update rule as follows:
