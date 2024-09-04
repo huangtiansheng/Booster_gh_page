@@ -34,19 +34,23 @@ Harmful fine-tuning issue \citep{qi2023fine} poses serious safety concerns for L
   <img src="static/image/booster.png" width="700" />
 </p>
 
-The figure demonstrates the risk for fine-tuning-as-a-service business model. At the first stage of the service pipeline, the model is safety aligned with safety alignment data. At the second stage, users upload data for service provider to finetune, and the service provider finetune model on user data to deliver custoomized service. However, the user data may contain harmful demonstration data that may subverts the previous enforced alignment. Finetuning on this partially harmful data and deploy the alignment-broken fine-tuned model may cause serious ethical and governance concern.    
+The figure demonstrates the risk for fine-tuning-as-a-service business model. At the first stage of the service pipeline, the model is safety aligned with safety alignment data/**simulated harmful data**. At the second stage, users upload data for service provider to finetune, and the service provider finetune model on user data to deliver custoomized service. However, the user data may contain harmful demonstration data that may subverts the previous enforced alignment. Finetuning on this partially harmful data and deploy the alignment-broken fine-tuned model may cause serious ethical and governance concern.    
 
 
 ## Harmful Perturbation
-We in the following show that the **harmful perturbation** should be the root cause of harmful fine-tuning attack. Harmful perturbation is defined as **taking one step on the model towards the gradient direction over the harmful data**. 
+We in the following show that the **harmful perturbation** should be the root cause of harmful fine-tuning attack. 
+
+**Definition of harmful perturbation.** Harmful perturbation is defined as **taking one step on the model towards the gradient direction over the harmful data**.
+
+**Impact of harmful perturbation.** The below Figure shows that the model's harmful score will substantially increase along with optimization steps invested in fine-tuning on a pure harmful dataset. On the contrary, the harmful score will not be affected much via fine-tuning on a pure SST2 dataset.  This indicates that taking a step with the gradient of the harmful data (i.e.,harmful perturbation) is indeed the reason for the alignment broken. the The middle/right of below Figure how taking harmful perturbation and SST2 perturbation in each epoch will affect the harmful training/testing loss. As shown harmful perturbation significantly reduces the harmful training/testing loss, which means the model starts to fit the harmful data, and therefore explaining the rise of harmful score when taking harmful perturbation.
 
 <p align="middle">
   <img src="static/image/statistics.png" width="900" />
 </p>
 
-## Booster: an Alignment-stage Defense via Attenuating Harmful Perturbation
+## Booster: Alignment-stage Defense via Attenuating Harmful Perturbation
 
-Booster aims to solve the following optimization problem:
+In order to attenuate the negative impact of harmful perturbation, Booster aims to solve the following optimization problem:
 
 <p align="middle">
   <img src="static/image/booster problem.png" width="700" />
@@ -70,24 +74,23 @@ for each optimization step.
   <img src="static/image/algorithm.png" width="700" />
 </p>
 
-## Results
 
 ## Quantitive results
 
-**Robustness to harmful ratio.** 
+**Robustness to harmful ratio.** As shown in the following table, compared to SFT,  Booster in average achieves 22.64\% of lower harmful score, and 2.64\% higher finetune accuracy on the downstream. 
 <p align="middle">
-  <img src="static/image/quantitive1.png" width="700" />
+  <img src="static/image/quantitive1.png" width="900" />
 </p>
 
-**Robustness to model architectures.** 
+**Robustness to model architectures.** In the next table, we show that the proposed method can be extended to two latest SOTA model architectures, i.e., Gemma2-9B, and Qwen2-7B. In average, Booster achieves 34.14\% reduction of harmful score and 0.71\% improvement of finetune accuracy.
 <p align="middle">
-  <img src="static/image/quantitive2.png" width="700" />
+  <img src="static/image/quantitive2.png" width="900" />
 </p>
 
 ## Qualitative results
 
 As follows, We show how different methods respond to the malicious prompt. We used the finetuned
-model over default attack setting for evaluation. As shown, Antidote is able to give refusal answer to
+model over default attack setting for evaluation. As shown, Booster is able to give refusal answer to
 the sensitive question while other methods cannot.
 <p align="middle">
   <img src="static/image/qualitative.png" width="700" />
