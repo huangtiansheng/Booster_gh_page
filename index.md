@@ -104,3 +104,39 @@ the sensitive question while other methods cannot.
   <img src="static/image/qualitative.png" width="700" />
 </p>
 
+
+
+## Citations
+If you find our paper interesting, you may cite our paper with the following Bibtex:
+
+
+
+```
+@article{huang2024booster,
+  title={Booster: Tackling Harmful Fine-tuning for Large Language Models via Attenuating Harmful Perturbation},
+  author={Huang, Tiansheng and Hu, Sihao and Ilhan, Fatih and Tekin, Selim Furkan and Liu, Ling},
+  journal={arXiv preprint arXiv:2409.01586},
+  year={2024}
+}
+
+@article{huang2024antidote,
+  title={Antidote: Post-fine-tuning Safety Alignment for Large Language Models against Harmful Fine-tuning},
+  author={Huang, Tiansheng and Bhattacharya, Gautam and Joshi, Pratik and Kimball, Josh and Liu, Ling},
+  journal={arXiv preprint arXiv:2408.09600},
+  year={2024}
+}
+
+@article{huang2024lazy,
+  title={Lazy Safety Alignment for Large Language Models against Harmful Fine-tuning},
+  author={Huang, Tiansheng and Hu, Sihao and Ilhan, Fatih and Tekin, Selim Furkan and Liu, Ling},
+  journal={arXiv preprint arXiv:2405.18641},
+  year={2024}
+}
+
+@article{huang2024vaccine,
+  title={Vaccine: Perturbation-aware alignment for large language model},
+  author={Huang, Tiansheng and Hu, Sihao and Liu, Ling},
+  journal={arXiv preprint arXiv:2402.01109},
+  year={2024}
+}
+```
